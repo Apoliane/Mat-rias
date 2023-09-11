@@ -1,0 +1,56 @@
+def calcular_media_ponderada(disciplinas):
+    soma_notas_pesos = 0
+    soma_pesos = 0
+
+    for disciplina in disciplinas:
+        nota = disciplina["nota"]
+        peso = disciplina["peso"]
+        soma_notas_pesos += nota * peso
+        soma_pesos += peso
+
+    if soma_pesos == 0:
+        return 0  # Evitar divisão por zero
+    else:
+        return round(soma_notas_pesos / soma_pesos, 2)
+
+def encontrar_menor_e_maior_nota(disciplinas):
+    menor_nota = float("inf")  # Inicializa com um valor infinito
+    maior_nota = float("-inf")  # Inicializa com um valor negativo infinito
+    nome_disciplina_menor = ""
+    nome_disciplina_maior = ""
+
+    for disciplina in disciplinas:
+        nota = disciplina["nota"]
+        nome = disciplina["nome"]
+
+        if nota < menor_nota:
+            menor_nota = nota
+            nome_disciplina_menor = nome
+
+        if nota > maior_nota:
+            maior_nota = nota
+            nome_disciplina_maior = nome
+
+    return (nome_disciplina_menor, menor_nota), (nome_disciplina_maior, maior_nota)
+
+def main():
+    n = int(input("Digite o número de disciplinas: "))
+    disciplinas = []
+
+    for _ in range(n):
+        nome = input("Digite o nome da disciplina: ")
+        nota = float(input("Digite a nota da disciplina: "))
+        peso = float(input("Digite o peso da disciplina: "))
+
+        disciplina = {"nome": nome, "nota": nota, "peso": peso}
+        disciplinas.append(disciplina)
+
+    menor, maior = encontrar_menor_e_maior_nota(disciplinas)
+    media_ponderada = calcular_media_ponderada(disciplinas)
+
+    print(f"Disciplina com a menor nota: {menor[0]}, Nota: {menor[1]:.1f}")
+    print(f"Disciplina com a maior nota: {maior[0]}, Nota: {maior[1]:.1f}")
+    print(f"Média ponderada das notas: {media_ponderada:.2f}")
+
+if __name__ == "__main__":
+    main()
